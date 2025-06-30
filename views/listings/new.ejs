@@ -1,0 +1,121 @@
+<% layout("/layouts/boilerplate") %>
+
+<style>
+  .category-options {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1rem;
+    margin-bottom: 1.5rem;
+  }
+
+  .category-option {
+    text-align: center;
+    opacity: 0.7;
+    padding: 0.5rem;
+    cursor: pointer;
+    border: 2px solid transparent;
+    border-radius: 0.75rem;
+    transition: 0.2s;
+  }
+
+  .category-option:hover,
+  .category-option.selected {
+    opacity: 1;
+    border-color: black;
+    background-color: #f8f9fa;
+  }
+
+  .category-option input[type="radio"] {
+    display: none;
+  }
+
+  .category-option p {
+    font-size: 0.8rem;
+    margin-top: 0.25rem;
+  }
+</style>
+
+<body>
+  <div class="row mt-3">
+    <div class="col-8 offset-2">
+      <h3>Create a New Listing</h3>
+
+      <form method="POST" action="/listings" novalidate class="needs-validation" enctype="multipart/form-data">
+
+        <div class="mb-3">
+          <label for="title" class="form-label">Title</label>
+          <input id="title" name="listing[title]" placeholder="Enter title" type="text" class="form-control" required />
+        </div>
+
+        <div class="mb-3">
+          <label for="description" class="form-label">Description</label>
+          <textarea id="description" name="listing[description]" placeholder="Enter description" class="form-control" required></textarea>
+        </div>
+
+        <div class="mb-3">
+          <label for="image" class="form-label">Upload Image</label>
+          <input id="image" name="listing[image]" class="form-control" type="file" required />
+        </div>
+
+        <div class="row">
+          <div class="mb-3 col-md-4">
+            <label for="price" class="form-label">Price</label>
+            <input id="price" name="listing[price]" placeholder="Enter price" type="number" class="form-control" required />
+          </div>
+
+          <div class="mb-3 col-md-8">
+            <label for="country" class="form-label">Country</label>
+            <input id="country" name="listing[country]" placeholder="Enter country" type="text" class="form-control" required />
+          </div>
+        </div>
+
+        <div class="mb-3">
+          <label for="location" class="form-label">Location</label>
+          <input id="location" name="listing[location]" placeholder="Enter location" class="form-control" type="text" required />
+        </div>
+
+        <!-- ✅ Category Options -->
+        <div class="mb-3">
+          <label class="form-label">Select Category</label>
+          <div class="category-options" id="categoryOptions">
+            <% const categories = [
+              { value: "trending", icon: "fa-fire", label: "Trending" },
+              { value: "bed", icon: "fa-bed", label: "Bed" },
+              { value: "iconic", icon: "fa-mountain-city", label: "Iconic Cities" },
+              { value: "mountains", icon: "fa-mountain", label: "Mountains" },
+              { value: "castle", icon: "fa-fort-awesome", label: "Castle" },
+              { value: "pools", icon: "fa-person-swimming", label: "Amazing Pools" },
+              { value: "camping", icon: "fa-campground", label: "Camping" },
+              { value: "farms", icon: "fa-cow", label: "Farms" },
+              { value: "arctic", icon: "fa-snowflake", label: "Arctic" },
+              { value: "domes", icon: "fa-igloo", label: "Domes" },
+              { value: "boats", icon: "fa-ship", label: "Boats" }
+            ]; %>
+
+            <% categories.forEach(cat => { %>
+              <label class="category-option">
+                <input type="radio" name="listing[category]" value="<%= cat.value %>" required />
+                <div><i class="fa-solid <%= cat.icon %>"></i></div>
+                <p><%= cat.label %></p>
+              </label>
+            <% }); %>
+          </div>
+        </div>
+
+        <button class="btn btn-dark">Add</button>
+      </form>
+    </div>
+  </div>
+
+  <script>
+    const categoryOptions = document.querySelectorAll(".category-option");
+
+    categoryOptions.forEach((option) => {
+      option.addEventListener("click", () => {
+        categoryOptions.forEach(opt => opt.classList.remove("selected"));
+        option.classList.add("selected");
+        option.querySelector("input").checked = true;
+      });
+    });
+  </script>
+</body>
