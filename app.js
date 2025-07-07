@@ -23,7 +23,7 @@ const LocalStargey=require("passport-local");
 
 const MongoStore = require('connect-mongo');
 
-//const MONGO_URL = "mongodb://127.0.0.1:27017/wanderlust";
+const MONGO_URL = "mongodb://127.0.0.1:27017/wanderlust";
 const dburl=process.env.ATLASDB_URL || "mongodb://127.0.0.1:27017/wanderlust";
 
 main()
@@ -31,7 +31,7 @@ main()
   .catch((err) => console.log(err));
 
 async function main() {
-  await mongoose.connect(dburl);
+  await mongoose.connect(MONGO_URL);
 }
 
 app.set("view engine", "ejs");
@@ -73,7 +73,7 @@ passport.serializeUser(User.serializeUser());
 passport.deserializeUser(User.deserializeUser());
 
 app.use((req,res,next)=>{
-  res.locals.sucess=req.flash("sucess");
+  res.locals.success=req.flash("sucess");
   res.locals.error=req.flash("error");
   res.locals.currUser=req.user;
   next();
