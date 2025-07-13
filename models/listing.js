@@ -27,6 +27,7 @@ const listingSchema = new Schema({
   },
   category:{
     type:String,
+    default: "other"
   },
 });
 

@@ -74,10 +74,10 @@
           <input id="location" name="listing[location]" placeholder="Enter location" class="form-control" type="text" required />
         </div>
 
-        <!-- ✅ Category Options -->
+        
         <div class="mb-3">
-          <label class="form-label">Select Category</label>
-          <div class="category-options" id="categoryOptions">
+          <label for="category" class="form-label">Category (optional)</label>
+          <select class="form-select" id="category" name="listing[category]">
             <% const categories = [
               { value: "trending", icon: "fa-fire", label: "Trending" },
               { value: "bed", icon: "fa-bed", label: "Bed" },
@@ -89,18 +89,19 @@
               { value: "farms", icon: "fa-cow", label: "Farms" },
               { value: "arctic", icon: "fa-snowflake", label: "Arctic" },
               { value: "domes", icon: "fa-igloo", label: "Domes" },
-              { value: "boats", icon: "fa-ship", label: "Boats" }
+              { value: "boats", icon: "fa-ship", label: "Boats" },
+              { value: "other", icon: "fa-ellipsis", label: "Other" }
+
             ]; %>
 
+
+            <option value="">Choose...</option>
             <% categories.forEach(cat => { %>
-              <label class="category-option">
-                <input type="radio" name="listing[category]" value="<%= cat.value %>" required />
-                <div><i class="fa-solid <%= cat.icon %>"></i></div>
-                <p><%= cat.label %></p>
-              </label>
+              <option value="<%= cat.value %>"><%= cat.label %></option>
             <% }); %>
-          </div>
+          </select>
         </div>
+
 
         <button class="btn btn-dark">Add</button>
       </form>

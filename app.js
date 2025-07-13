@@ -74,7 +74,7 @@ passport.serializeUser(User.serializeUser());
 passport.deserializeUser(User.deserializeUser());
 
 app.use((req,res,next)=>{
-  console.log("Middleware hit, user:", req.user);
+  
   res.locals.sucess=req.flash("sucess");
   res.locals.error=req.flash("error");
   res.locals.currUser=req.user;

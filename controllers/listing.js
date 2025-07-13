@@ -95,9 +95,11 @@ module.exports.searchListing = async (req, res) => {
   }
 };
 
+
 module.exports.filterByCategory = async (req, res) => {
   const { category } = req.params;
-  const allListings = await Listing.find({ category });
+  const allListings = await Listing.find({ category: category.toLowerCase() });
   res.render("listings/index", { allListings });
+
 };
 
